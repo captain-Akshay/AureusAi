@@ -5,7 +5,7 @@ import { ModeToggle } from "../ui/mode-toggle";
 function GettingStarted() {
   return (
     <div className="flex flex-row gap-4 justify-center items-center z-10">
-      <Link href="/join" className="relative inline-block text-lg group">
+      <Link href="/signup" className="relative inline-block text-lg group">
         <span
           className={`relative z-10 block px-5 py-3 overflow-hidden font-medium leading-tight transition-colors duration-300 ease-out border-2 rounded-lg group-hover:text-white dark:text-gray-200 dark:border-gray-400 text-gray-800 border-gray-900 hover:dark:text-gray-950`}
         >

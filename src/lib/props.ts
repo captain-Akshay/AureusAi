@@ -10,3 +10,10 @@ type svgProps = {
   className?: string; // Custom class for styling
   onClick?: () => void; // Click event handler
 };
+type Feature = {
+  title: string;
+  description: string;
+  icon: JSX.Element;
+  link: string;
+  linkDescription: string;
+};

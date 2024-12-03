@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 export default function AuthenticationPage({ login }: { login: boolean }) {
   return !login ? (
     <>
-      <div className=" w-full dark:bg-black bg-white  dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] relative flex items-center justify-center">
+      <div className="w-full dark:bg-black bg-white dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] relative flex items-center justify-center">
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-        <div className="relative w-screen hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <div className="relative w-screen h-screen flex flex-col items-center justify-center lg:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
           <Link
             href="/signin"
             className={cn(
@@ -42,9 +42,9 @@ export default function AuthenticationPage({ login }: { login: boolean }) {
             <div className="relative z-20 mt-auto">
               <blockquote className="space-y-2">
                 <p className="text-lg">
-                  &ldquo;This is the place where you begin journey for expected
-                  financial growth without any code and some motivational lines
-                  for you to use this software.&rdquo;
+                  &ldquo;This is the place where you begin your journey for
+                  expected financial growth without any code and some
+                  motivational lines for you to use this software.&rdquo;
                 </p>
                 <footer className="text-sm">Ak</footer>
               </blockquote>
@@ -87,7 +87,7 @@ export default function AuthenticationPage({ login }: { login: boolean }) {
     <>
       <div className=" w-full dark:bg-black bg-white  dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] relative flex items-center justify-center">
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-        <div className="relative w-screen hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <div className="relative w-screen h-screen flex flex-col items-center justify-center lg:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
           <div className="lg:p-8">
             <Link
               href="/signup"

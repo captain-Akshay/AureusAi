@@ -2,5 +2,7 @@
 ui:
 	npm run dev;
 
-ui-build:
+uib:
 	npm run build;
+us:
+	npm run start;

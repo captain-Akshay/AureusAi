@@ -1,22 +1,7 @@
 "use server";
-import { prisma } from "@/lib/prisma";
 import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "../auth";
-
-const getUserByEmail = async (email: string) => {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
-
-    return user;
-  } catch (error) {
-    return null;
-  }
-};
 
 export const loginUsingProvider = async (provider: string) => {
   await signIn(provider, { redirectTo: "/dashboard" });
@@ -40,7 +25,6 @@ export const loginWithCreds = async (formData: FormData) => {
     await signIn("credentials", rawFormData);
   } catch (error) {
     if (error instanceof AuthError) {
-      console.log(error.type);
       switch (error.type) {
         case "CredentialsSignin":
           return { error: "Invalid password" };

@@ -68,6 +68,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        move: {
+          "0%": { transform: "translateX(-200px)" },
+          "100%": { transform: "translateX(200px)" },
+        },
         "infinite-scroll": {
           from: {
             transform: "translateX(0)",
@@ -102,6 +106,7 @@ export default {
         },
       },
       animation: {
+        move: "move 5s linear infinite",
         "infinite-scroll": "infinite-scroll 25s linear infinite",
         shimmer: "shimmer 2s linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",

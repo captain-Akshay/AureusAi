@@ -24,6 +24,18 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+enum TaskStatus {
+  processing
+  completed
+  failed
+}
+
+model Task {
+  id     String     @id @default(cuid())
+  userId String
+  status TaskStatus @default(processing)
+}
+
 model Account {
   userId            String
   type              String

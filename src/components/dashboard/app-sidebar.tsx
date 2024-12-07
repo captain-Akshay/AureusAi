@@ -1,6 +1,13 @@
 "use client";
 
-import { BookOpen, Bot, SquareTerminal } from "lucide-react";
+import {
+  BookOpen,
+  Bot,
+  Frame,
+  Map,
+  PieChart,
+  SquareTerminal,
+} from "lucide-react";
 import * as React from "react";
 
 import {
@@ -8,13 +15,30 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail,
 } from "@/components/ui/sidebar";
 import CompanyHeader from "./company-header";
 import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
 
 const data = {
+  projects: [
+    {
+      name: "My Videos",
+      url: "/dashboard/my-videos",
+      icon: Frame,
+    },
+    {
+      name: "My Audios",
+      url: "/dashboard/my-audios",
+      icon: PieChart,
+    },
+    {
+      name: "My Automations",
+      url: "/dashboard/my-automations",
+      icon: Map,
+    },
+  ],
   navMain: [
     {
       title: "Ai",
@@ -89,11 +113,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
+        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
       </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
   );
 }

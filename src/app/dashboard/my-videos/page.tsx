@@ -13,7 +13,6 @@ export default function MyVideosPage() {
       try {
         setIsLoading(true);
         const response = await axios.get("/api/my-videos");
-        console.log(response.data);
         setVideos(response.data);
       } catch (error) {
         console.error("Failed to fetch videos", error);

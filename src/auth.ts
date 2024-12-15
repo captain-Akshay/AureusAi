@@ -47,7 +47,7 @@ export const {
               password: hash,
               emailVerified: new Date(),
               image: null,
-              currency: 1000,
+              currency: 1,
             },
           });
         } else {

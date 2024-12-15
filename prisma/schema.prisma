@@ -16,7 +16,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  currency      Int             @default(1000)
+  currency      Int             @default(1)
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 

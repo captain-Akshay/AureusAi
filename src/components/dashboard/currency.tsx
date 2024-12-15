@@ -23,7 +23,8 @@ function Currency() {
       setCurrencyCount(currencyCount);
     }
     fetchCurrency();
-  }, [session]);
+  }, []);
+
   return (
     <TooltipProvider>
       <Tooltip>
@@ -35,7 +36,7 @@ function Currency() {
         </TooltipTrigger>
         <TooltipContent>
           <p>Only One at a time</p>
-          <i>That's what she said</i>
+          <i>That&apos;s what she said</i>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

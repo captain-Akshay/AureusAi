@@ -30,10 +30,18 @@ enum TaskStatus {
   failed
 }
 
+enum TaskType {
+  video
+  audio
+  image
+}
+
 model Task {
   id     String     @id @default(cuid())
   userId String
+  name   String     @default("Untitled Project")
   status TaskStatus @default(processing)
+  type   TaskType   @default(video)
 }
 
 model Account {

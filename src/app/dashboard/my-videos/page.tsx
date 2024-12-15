@@ -1,12 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Loader from "@/components/ui/loader";
 import axios from "axios";
 import { Download, Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 interface VideoTask {
   id: string;
+  name: string;
   status: "processing" | "completed" | "error";
   videoUrl?: string;
 }
@@ -20,6 +22,7 @@ export default function MyVideosPage() {
       try {
         setIsLoading(true);
         const response = await axios.get("/api/my-videos");
+        console.log(response.data);
         setVideos(response.data);
       } catch (error) {
         console.error("Failed to fetch videos", error);
@@ -32,7 +35,7 @@ export default function MyVideosPage() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading videos...</div>;
+    return <Loader />;
   }
 
   return (
@@ -51,13 +54,13 @@ export default function MyVideosPage() {
   );
 }
 
-const VideoCard: React.FC<{
+export const VideoCard: React.FC<{
   video: VideoTask;
 }> = ({ video }) => {
   const handleDownload = async (video_id: string) => {
     try {
       const response = await axios.get(
-        `/api/download?taskId=${video_id}&extension=final_video.mp4`
+        `/api/download?taskId=${video_id}&extension=final.wav`
       );
       const url = response.data.url;
       const link = document.createElement("a");
@@ -80,6 +83,7 @@ const VideoCard: React.FC<{
           <div className="animate-pulse">
             <Loader2 className="h-12 w-12 text-blue-500 animate-spin" />
           </div>
+          <p>{video.name}</p>
           <p className="text-sm text-muted-foreground">
             Video is being processed. This may take a few minutes.
           </p>
@@ -96,6 +100,8 @@ const VideoCard: React.FC<{
         </CardHeader>
         <CardContent className="space-y-4">
           <video src={video.videoUrl} controls className="w-full rounded-lg" />
+
+          <p>{video.name}</p>
           <div className="flex justify-between">
             <Button onClick={() => handleDownload(video.id)} className="w-full">
               <Download className="mr-2 h-4 w-4" /> Download

@@ -7,12 +7,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import AudioBased from "@/components/utitlity/audiobased-script";
+import FullFunctional from "@/components/utitlity/full-functional";
 import GeneratingAudio from "@/components/utitlity/generating-audio";
 import OneVideoSplitScreen from "@/components/utitlity/one-split-video";
 import VideoSplitScreen from "@/components/utitlity/split-screen-video";
 import { useState } from "react";
 
-type ModalType = "split_screen" | "one_split" | "audio" | "full_video";
+type ModalType =
+  | "split_screen"
+  | "one_split"
+  | "audio"
+  | "full_video"
+  | "thumbnail"
+  | "audiobased";
 export default function Dashboard() {
   const [activeModal, setActiveModal] = useState<ModalType | null>(null);
   const openModal = (modalType: ModalType) => {
@@ -62,6 +70,26 @@ export default function Dashboard() {
       buttonName: "Generate Audio with Video ",
       onClick: () => openModal("full_video"),
     },
+    {
+      Icon: (
+        <Icons.audiobased className="h-16 w-16 dark:fill-white fill-gray-700" />
+      ),
+      Title: "Generate Audio based on voice",
+      Description:
+        "Generate an audio based on the voice you provide, the better the quality you give the better the results",
+      buttonName: "Generate Voice",
+      onClick: () => openModal("audiobased"),
+    },
+    {
+      Icon: (
+        <Icons.thumbnail className="h-16 w-16 dark:fill-white fill-gray-700" />
+      ),
+      Title: "Generate Thumbnail",
+      Description:
+        "Create a video with the given script and you have to choose the background visual",
+      buttonName: "Generate Audio with Video ",
+      onClick: () => openModal("thumbnail"),
+    },
   ];
   const modalConfigs = {
     split_screen: {
@@ -78,7 +106,15 @@ export default function Dashboard() {
     },
     full_video: {
       title: "Generate Video with script",
-      content: <VideoSplitScreen />,
+      content: <FullFunctional />,
+    },
+    audiobased: {
+      title: "Generate Audio based on script & your voice",
+      content: <AudioBased />,
+    },
+    thumbnail: {
+      title: "Generate Thumbnail",
+      content: <></>,
     },
   };
   return (

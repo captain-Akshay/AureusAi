@@ -2,41 +2,20 @@
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { loadingStates } from "@/utils/constants";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { FileUpload } from "../ui/file-upload";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { MultiStepLoader } from "../ui/multi-step-loader";
-const loadingStates = [
-  {
-    text: "Let me tell you a story",
-  },
-  {
-    text: "to waste your time",
-  },
-  {
-    text: "so you won't know",
-  },
-  {
-    text: "how slow our system is",
-  },
-  {
-    text: "Adding your video in queue",
-  },
-  {
-    text: "Insulting the workers to work faster",
-  },
-  {
-    text: "This is embarrassing",
-  },
-  {
-    text: "Ah shit, here we go again.",
-  },
-];
+
 export default function VideoSplitScreen() {
+  const [projectName, setProjectName] = useState("Untitled Project");
   const [files, setFiles] = useState<File[]>([]);
   const handleFileUpload = (files: File[]) => {
-    setFiles(files);
+    setFiles((prevFiles) => [...prevFiles, ...files]);
   };
   const { toast } = useToast();
   const session = useSession();
@@ -71,6 +50,8 @@ export default function VideoSplitScreen() {
     }
 
     const formData = new FormData();
+
+    formData.append("project_name", projectName);
     formData.append("video1", files[0]);
     formData.append("video2", files[1]);
     formData.append("method", "split_screen_video");
@@ -100,20 +81,32 @@ export default function VideoSplitScreen() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 rounded-lg shadow-md">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <FileUpload onChange={handleFileUpload} />
-        </div>
-        <Button type="submit" disabled={isUploading} className="w-full mt-4">
-          {isUploading ? "Queueing..." : "Queue Split Screen Video"}
-        </Button>
-      </form>
+    <>
+      <div className="max-w-md mx-auto p-6 rounded-lg shadow-md">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="project-name">Project Name</Label>
+            <Input
+              type="project-name"
+              id="project-name"
+              placeholder="Project Name"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+            />
+          </div>
+          <div>
+            <FileUpload onChange={handleFileUpload} />
+          </div>
+          <Button type="submit" disabled={isUploading} className="w-full mt-4">
+            {isUploading ? "Queueing..." : "Queue Split Screen Video"}
+          </Button>
+        </form>
+      </div>
       <MultiStepLoader
         loadingStates={loadingStates}
         loading={isUploading}
         duration={2000}
       />
-    </div>
+    </>
   );
 }

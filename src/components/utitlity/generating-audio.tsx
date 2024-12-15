@@ -2,41 +2,20 @@
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { loadingStates } from "@/utils/constants";
 import axios from "axios";
 import { useState } from "react";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { MultiStepLoader } from "../ui/multi-step-loader";
 import { Separator } from "../ui/separator";
 import { Textarea } from "../ui/textarea";
 import AudioPlaylist from "./audio-script-accordian";
-const loadingStates = [
-  {
-    text: "Let me tell you a story",
-  },
-  {
-    text: "to waste your time",
-  },
-  {
-    text: "so you won't know",
-  },
-  {
-    text: "how slow our system is",
-  },
-  {
-    text: "Adding your video in queue",
-  },
-  {
-    text: "Insulting the workers to work faster",
-  },
-  {
-    text: "This is embarrassing",
-  },
-  {
-    text: "Ah shit, here we go again.",
-  },
-];
+
 export default function GeneratingAudio() {
+  const [projectName, setProjectName] = useState("Untitled Project");
   const [text, setText] = useState(null);
-  const [selectedTrack, setSelectedTrack] = useState(null);
+  const [speaker, setspeaker] = useState(null);
   const handleTextareaChange = (e) => {
     setText(e.target.value);
   };
@@ -54,7 +33,10 @@ export default function GeneratingAudio() {
       return;
     }
     const formData = new FormData();
-    formData.append("txt", text);
+
+    formData.append("project_name", projectName);
+    formData.append("script", text);
+    formData.append("speaker", speaker);
     formData.append("method", "generate_audio");
     setIsUploading(true);
 
@@ -82,30 +64,42 @@ export default function GeneratingAudio() {
   };
 
   return (
-    <div className="p-6 rounded-lg shadow-md">
-      <form onSubmit={handleSubmit} className="flex flex-col items-center">
-        <div className="flex justify-center mt-4 gap-8">
-          <Textarea
-            onChange={handleTextareaChange}
-            value={text}
-            className="w-96 h-40 mt-4"
-            placeholder="Enter your script here"
-          />
-          <Separator orientation="vertical" className="h-auto" />
-          <AudioPlaylist
-            selectedTrack={selectedTrack}
-            setSelectedTrack={setSelectedTrack}
-          />
-        </div>
-        <Button type="submit" disabled={isUploading} className="w-full mt-4">
-          {isUploading ? "Queueing..." : "Queue your script"}
-        </Button>
-      </form>
+    <>
+      <div className="p-6 rounded-lg shadow-md">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center">
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="project-name">Project Name</Label>
+            <Input
+              type="project-name"
+              id="project-name"
+              placeholder="Project Name"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+            />
+          </div>
+          <div className="flex justify-center mt-4 gap-8">
+            <Textarea
+              onChange={handleTextareaChange}
+              value={text}
+              className="w-96 h-40 mt-4"
+              placeholder="Enter your script here"
+            />
+            <Separator orientation="vertical" className="h-auto" />
+            <AudioPlaylist
+              selectedTrack={speaker}
+              setSelectedTrack={setspeaker}
+            />
+          </div>
+          <Button type="submit" disabled={isUploading} className="w-full mt-4">
+            {isUploading ? "Queueing..." : "Queue your script"}
+          </Button>
+        </form>
+      </div>
       <MultiStepLoader
         loadingStates={loadingStates}
         loading={isUploading}
         duration={2000}
       />
-    </div>
+    </>
   );
 }

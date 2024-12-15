@@ -2,44 +2,23 @@
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { loadingStates } from "@/utils/constants";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { FileUpload } from "../ui/file-upload";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { MultiStepLoader } from "../ui/multi-step-loader";
 import { Separator } from "../ui/separator";
 import GameplayAccordion from "./gameplay-accordian";
-const loadingStates = [
-  {
-    text: "Let me tell you a story",
-  },
-  {
-    text: "to waste your time",
-  },
-  {
-    text: "so you won't know",
-  },
-  {
-    text: "how slow our system is",
-  },
-  {
-    text: "Adding your video in queue",
-  },
-  {
-    text: "Insulting the workers to work faster",
-  },
-  {
-    text: "This is embarrassing",
-  },
-  {
-    text: "Ah shit, here we go again.",
-  },
-];
+
 export default function OneVideoSplitScreen() {
+  const [projectName, setProjectName] = useState("Untitled Project");
   const [files, setFiles] = useState<File[]>([]);
   const [gameplayName, setGameplayName] = useState("");
   const handleFileUpload = (files: File[]) => {
-    setFiles(files);
+    setFiles((prevFiles) => [...prevFiles, ...files]);
   };
   const { toast } = useToast();
   const session = useSession();
@@ -74,8 +53,10 @@ export default function OneVideoSplitScreen() {
     }
 
     const formData = new FormData();
+
+    formData.append("project_name", projectName);
     formData.append("gameplay", gameplayName);
-    formData.append("video", files[0]);
+    formData.append("video1", files[0]);
     formData.append("method", "one_split_screen_video");
     setIsUploading(true);
 
@@ -103,27 +84,39 @@ export default function OneVideoSplitScreen() {
   };
 
   return (
-    <div className="p-6 rounded-lg shadow-md space-y-4">
-      <form onSubmit={handleSubmit} className="flex flex-col items-center">
-        {/* Submit Button */}
-        <div className="flex justify-center mt-4 gap-8">
-          <FileUpload onChange={handleFileUpload} />
-          <Separator orientation="vertical" className="h-auto" />
+    <>
+      <div className="p-6 rounded-lg shadow-md space-y-4">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center">
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="project-name">Project Name</Label>
+            <Input
+              type="project-name"
+              id="project-name"
+              placeholder="Project Name"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+            />
+          </div>
+          {/* Submit Button */}
+          <div className="flex justify-center mt-4 gap-8">
+            <FileUpload onChange={handleFileUpload} />
+            <Separator orientation="vertical" className="h-auto" />
 
-          <GameplayAccordion
-            videoName={gameplayName}
-            setVideoName={setGameplayName}
-          />
-        </div>
-        <Button type="submit" disabled={isUploading} className="w-1/2 mt-8">
-          {isUploading ? "Queueing..." : "Queue One Split Screen Video"}
-        </Button>
-      </form>
+            <GameplayAccordion
+              videoName={gameplayName}
+              setVideoName={setGameplayName}
+            />
+          </div>
+          <Button type="submit" disabled={isUploading} className="w-1/2 mt-8">
+            {isUploading ? "Queueing..." : "Queue One Split Screen Video"}
+          </Button>
+        </form>
+      </div>
       <MultiStepLoader
         loadingStates={loadingStates}
         loading={isUploading}
         duration={2000}
       />
-    </div>
+    </>
   );
 }

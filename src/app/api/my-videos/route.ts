@@ -13,6 +13,7 @@ export const GET = async (req: NextRequest) => {
   const tasks = await prisma.task.findMany({
     where: {
       userId: session.user.email,
+      type: "video",
     },
   });
   return Response.json(tasks);

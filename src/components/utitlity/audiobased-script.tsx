@@ -34,7 +34,7 @@ function AudioBased() {
       });
       return;
     }
-    console.log(files, files.length);
+
     if (files.length === 0 || files.length > 1) {
       toast({
         title: "Bruh!",

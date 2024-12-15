@@ -6,7 +6,7 @@ function GettingStarted() {
   return (
     <div className="flex flex-row gap-4 justify-center items-center z-10">
       <UserAvatar />
-      <ModeToggle />
+      <ModeToggle className={""} />
     </div>
   );
 }

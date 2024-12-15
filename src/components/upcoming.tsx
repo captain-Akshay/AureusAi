@@ -15,7 +15,6 @@ export function UpcomingScreen() {
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submitted");
   };
   return (
     <div className=" w-full rounded-mdrelative flex flex-col items-center justify-center antialiased">

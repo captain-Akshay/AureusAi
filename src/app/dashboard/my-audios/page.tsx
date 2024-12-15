@@ -1,17 +1,11 @@
 "use client";
+import { VideoCard } from "@/components/dashboard/video-card";
 import Loader from "@/components/ui/loader";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { VideoCard } from "../my-videos/page";
-
-interface AudioTask {
-  id: string;
-  status: "processing" | "completed" | "error";
-  audioUrl?: string;
-}
 
 export default function MyAudioPage() {
-  const [audio, setAudio] = useState<AudioTask[]>([]);
+  const [audio, setAudio] = useState<MediaTask[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

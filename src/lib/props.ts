@@ -17,3 +17,10 @@ type Feature = {
   link: string;
   linkDescription: string;
 };
+
+interface MediaTask {
+  id: string;
+  name: string;
+  status: "processing" | "completed" | "error";
+  videoUrl?: string;
+}

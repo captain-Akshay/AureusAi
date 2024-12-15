@@ -50,7 +50,6 @@ const createTask = async (
   taskId: string,
   taskType: TaskType
 ) => {
-  console.log(projectName, username, taskId, taskType);
   await prisma.task.create({
     data: {
       id: taskId,

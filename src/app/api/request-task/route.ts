@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { activeRequestsGauge } from "@/utils/requestGauge";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { TaskType } from "@prisma/client";
 import { Queue } from "bullmq";
@@ -302,6 +303,7 @@ const handleAudioBased = async (
   }
 };
 export async function POST(req: NextRequest) {
+  activeRequestsGauge.inc();
   const session = await auth();
   if (!session) {
     return Response.json({
@@ -374,11 +376,13 @@ export async function POST(req: NextRequest) {
         script
       );
     default:
+      activeRequestsGauge.dec();
       return Response.json({
         error: "Invalid method",
         status: 400,
       });
   }
+  activeRequestsGauge.dec();
   return Response.json({
     message: response.message,
     status: 200,

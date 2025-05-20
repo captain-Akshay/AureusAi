@@ -23,7 +23,7 @@ export const VideoCard: React.FC<{
   };
   if (video.status === "processing") {
     return (
-      <Card className="hover:shadow-lg transition-shadow duration-300">
+      <Card className="hover:shadow-lg transition-shadow duration-300 w-full">
         <CardHeader>
           <CardTitle>Processing Video</CardTitle>
         </CardHeader>

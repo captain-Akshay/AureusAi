@@ -120,7 +120,7 @@ function FullFunctional() {
             </div>
           </div>
           <Button type="submit" disabled={isUploading} className="w-1/2 mt-8">
-            {isUploading ? "Queueing..." : "Queue One Split Screen Video"}
+            {isUploading ? "Queueing..." : "Queue Full Functional Video"}
           </Button>
         </form>
       </div>

@@ -8,7 +8,7 @@ export const VideoCard: React.FC<{
   const handleDownload = async (video_id: string) => {
     try {
       const response = await axios.get(
-        `/api/download?taskId=${video_id}&extension=final.wav`
+        `/api/download?taskId=${video_id}&extension=final_video.mp4`
       );
       const url = response.data.url;
       const link = document.createElement("a");
